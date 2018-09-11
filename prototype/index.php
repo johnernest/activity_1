@@ -1,3 +1,5 @@
+<?php require("db_connection.php"); ?>
+
 <?php
     $_page = ( !empty($_GET['page']) ) ? strtolower($_GET['page']) : 'home';
 
@@ -36,6 +38,7 @@
 
 <body>
 <div class="container">
+    
     <?php include_once("template/header.php"); ?>
 
     <?php 
@@ -50,6 +53,7 @@
     ?>
     
     <?php include_once("template/footer.php"); ?>
+    <?php include_once("template/modals.php"); ?>
 </div>
 
 <script src="../assets/js/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
