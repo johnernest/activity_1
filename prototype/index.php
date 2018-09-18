@@ -62,6 +62,42 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#table-blogs').DataTable();
+
+            $('#AddUserModal').on('show.bs.modal', function (event) {
+                // alert(1);
+                // console.log(1);
+
+                var button = $(event.relatedTarget) // Button that triggered the modal
+
+                console.log(button);
+                var username = button.data('username');
+                var first_name = button.data('first_name');
+                var last_name = button.data('last_name');
+                var email = button.data('email');
+                var mobile = button.data('mobile');
+                var id = button.data('id');
+                console.log(id, username, first_name, last_name, email, mobile);
+
+                var modal = $(this);
+
+                if (id) {
+                    modal.find('#AddUserModalLabel').text('Edit User');
+                    modal.find('button[type="submit"]').text('Update');
+                    modal.find('.modal-body input[name="username"]').val(username);
+                    modal.find('.modal-body input[name="first_name"]').val(first_name);
+                    modal.find('.modal-body input[name="last_name"]').val(last_name);
+                    modal.find('.modal-body input[name="email"]').val(email);
+                    modal.find('.modal-body input[name="mobile"]').val(+mobile);
+                    modal.find('.modal-body input[name="id"]').val(id);
+                } else {
+                    modal.find('#AddUserModalLabel').text('New User');
+                    modal.find('button[type="submit"]').text('Add');
+                    modal.find('form').trigger('reset');
+                    // modal.find('.modal-body input[name="id"]').val(id);
+                }
+
+
+            });
         });
     </script>
 

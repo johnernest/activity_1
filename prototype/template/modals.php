@@ -70,7 +70,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
+                        <input type="hidden" name="id" value="">
                         <div class="form-group">
                             <label for="title-name" class="col-form-label">Username:</label>
                             <input type="text" required name="username" class="form-control">

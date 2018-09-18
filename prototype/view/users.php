@@ -1,25 +1,44 @@
-
 <?php
+$message = "";
+$sql = "";
 
-if(!empty($_POST)){
-
-$sql = "INSERT INTO users(username, password, first_name, last_name, email, mobile) 
-    VALUES ('" .$_POST['username'] . "',
-            '" .$_POST['password'] . "',
-            '" .$_POST['first_name']. "',
-            '" .$_POST['last_name'] . "',
-            '" .$_POST['email'] . "',
-            '" .$_POST['mobile'] ."')";
-
-
-
-
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+if(!empty($_GET['action']) && !empty($_GET['id'])){
+    $sql = "DELETE FROM users WHERE id=" . $_GET['id'];
+    $message = "Record has been deleted successfully";
 }
 
+if(!empty($_POST)){
+    if(!empty($_POST['id']))
+    {
+        $sql = "UPDATE users SET username='" .$_POST['username']. "', 
+                                first_name = '" .$_POST['first_name']. "',
+                                 last_name = '" .$_POST['last_name']. "', 
+                                 email = '" .$_POST['email'] . "'  ,
+                                 mobile = '" .$_POST['mobile']. "'
+
+                                 WHERE id= ".$_POST['id'];
+                                 $message = "record has been updated";
+
+    }
+    else{
+    $sql = "INSERT INTO users(username, password, first_name, last_name, email, mobile) 
+            VALUES ('" .$_POST['username'] . "',
+                    '" .$_POST['password'] . "',
+                    '" .$_POST['first_name']. "',
+                    '" .$_POST['last_name'] . "',
+                    '" .$_POST['email'] . "',
+                    '" .$_POST['mobile'] ."')";
+
+    $message = "New record created successfully";
+    }
+}
+
+if ( !empty($sql) ) {
+    if ($conn->query($sql) === TRUE) {
+        echo $message;
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
 }
 ?>
 
@@ -78,8 +97,19 @@ if ($conn->query($sql) === TRUE) {
                                     <td><?php echo $row["mobile"]?></td>
                                     <td><?php echo $row["created"]?></td>
                                     <td>
-                                        <a class="btn btn-sm btn-outline-success" href="#">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+                                        <a 
+                                            class="btn btn-sm btn-outline-success" 
+                                            data-toggle="modal" 
+                                            data-target="#AddUserModal" 
+                                            data-username="<?php echo $row["username"]?>"
+                                            data-first_name="<?php echo $row["first_name"]?>"
+                                            data-last_name="<?php echo $row["last_name"]?>"
+                                            data-email="<?php echo $row["email"]?>"
+                                            data-mobile="<?php echo $row["mobile"]?>"
+                                            data-id="<?php echo $row["ID"]?>"
+                                            href="#"
+                                        >Edit</a>
+                                        <a class="btn btn-sm btn-outline-danger" href="?page=users&action=delete&id=<?php echo $row["ID"]?>">Delete</a>
                                     </td>
                                 </tr>
 
